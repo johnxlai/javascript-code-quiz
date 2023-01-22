@@ -97,9 +97,13 @@ body {
 }
 
 .btn-primary {
-  background: #361c75;
+  background: #361c75 !important;
   border: 0;
 }
 .btn-primary:hover {
-  background: #c6adff !important;
+  background: #bb70cc !important;
+}
+
+.bg-tertiary {
+  background: #d4c2fc !important;
 }/*# sourceMappingURL=style.css.map */

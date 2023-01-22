@@ -1,5 +1,6 @@
 $primary: #361c75;
-$secondary: #c6adff;
+$secondary: #bb70cc;
+$tertiary: #d4c2fc;
 
 //Overwrite bootstrap btn colour
 .text {
@@ -10,11 +11,14 @@ $secondary: #c6adff;
 
 .btn {
   &-primary {
-    background: $primary;
+    background: $primary !important;
     border: 0;
 
     &:hover {
       background: $secondary !important;
     }
   }
+}
+.bg-tertiary {
+  background: $tertiary !important;
 }
