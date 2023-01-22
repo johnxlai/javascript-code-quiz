@@ -146,10 +146,14 @@ function getInputvalue() {
     //Ad UserName to object
     finalResult['userName'] = userName.value;
     console.log(finalResult);
+    storeUserInfo(finalResult);
   });
 }
 
 //store user name and points in local storage
+function storeUserInfo(playerInfo) {
+  localStorage.setItem('playerList', JSON.stringify(playerInfo));
+}
 
 //show high scores display board
 
@@ -160,6 +164,11 @@ function getInputvalue() {
 
 //Init
 function init() {
+  let storedPlayerList = JSON.parse(localStorage.getItem('playerList'));
+
+  if (storedPlayerList !== null) {
+    playerInfo = storedPlayerList;
+  }
   startGame();
 }
 init();
