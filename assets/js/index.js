@@ -5,6 +5,7 @@ const btnsSection = document.querySelector('.btns-section');
 const timerEl = document.querySelector('.timer-count');
 const questionEl = document.querySelector('.question');
 const resultEl = document.querySelector('.results');
+const finalTimeEl = document.querySelector('.final-time-left');
 
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
@@ -35,7 +36,7 @@ function startTimer() {
     timerEl.textContent = timerCount;
 
     //End game if timer is over
-    if (timerCount === 0) {
+    if (timerCount < 0) {
       timerEl.textContent = `Out of Time`;
 
       //Stop timer
@@ -91,9 +92,12 @@ while (n < lengthOfQuestions) {
     });
   });
 }
-function goToNextQuestion() {}
-// check if user input is correct
 
+function goToNextQuestion() {
+  endGame();
+}
+
+// check if user input is correct
 function showResults(userAnswer, correctAnswer) {
   console.log(userAnswer, correctAnswer);
 
@@ -110,9 +114,20 @@ function showResults(userAnswer, correctAnswer) {
   //If Correct show correct
   resultEl.textContent = 'Correct !';
   //show next question
+  goToNextQuestion();
 }
 
 //end game either when there is no time left or all the questions have been asked
+function endGame() {
+  quizContent.classList.add('d-none');
+  finalScore.classList.remove('d-none');
+
+  finalResult = {
+    user: 'username',
+    points: timerCount,
+  };
+  finalTimeEl.textContent = finalResult.points;
+}
 
 //stop game
 
