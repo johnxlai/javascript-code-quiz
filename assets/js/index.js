@@ -47,13 +47,22 @@ const listOfQuestions = {
 
 //check lenghth of Questions to know how many times it needs to be looped
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
-console.log(lengthOfQuestions);
 
-//display 4 possible answer
-for (const question in listOfQuestions) {
-  console.log(`${question} : ${listOfQuestions[question]}`);
-  let [correctAnswer] = listOfQuestions[question].slice(-1);
-  console.log(correctAnswer);
+let n = 0;
+while (n < lengthOfQuestions) {
+  let chosenQuestion = Object.keys(listOfQuestions)[n];
+  let chosenChoices = listOfQuestions[chosenQuestion];
+  let [correctAnswer] = chosenChoices.slice(-1);
+  n++;
+
+  console.log(chosenQuestion, chosenChoices, correctAnswer);
+
+  //display 4 possible answer
+  // for (const question in listOfQuestions) {
+  //   console.log(`${question} : ${listOfQuestions[question]}`);
+  //   let [correctAnswer] = listOfQuestions[question].slice(-1);
+  //   console.log(correctAnswer);
+  // }
 }
 // check if user input is correct
 
