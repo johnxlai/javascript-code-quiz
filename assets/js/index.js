@@ -56,7 +56,6 @@ while (n < lengthOfQuestions) {
   let chosenQuestion = Object.keys(listOfQuestions)[n];
   let chosenChoices = listOfQuestions[chosenQuestion];
   let correctAnswer = chosenChoices.pop();
-
   n++;
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
@@ -66,33 +65,33 @@ while (n < lengthOfQuestions) {
 
   //loop thru the array and generate a button for each element
   chosenChoices.forEach((choice) => {
+    let indexOfBtn = chosenChoices.indexOf(choice);
     let button = document.createElement('button');
     //Add btn style
     button.setAttribute('class', 'btn btn-primary mb-3 p-3');
 
     //set index number in the array
-    button.setAttribute('data-index', chosenChoices.indexOf(choice));
+    button.setAttribute('data-index', indexOfBtn);
     //Add correct text for each btn
-    button.appendChild(document.createTextNode(choice));
+    button.appendChild(document.createTextNode(`${indexOfBtn + 1}. ${choice}`));
     btnsSection.appendChild(button);
     console.log(choice);
 
     //add click listenser
     button.addEventListener('click', function () {
       let userAnswer = button.getAttribute('data-index');
-      console.log(userAnswer);
+      //pass arguements to check user result
+
+      checkUserAnswer(userAnswer, correctAnswer);
     });
   });
-
-  //display 4 possible answer
-  // for (const question in listOfQuestions) {
-  //   console.log(`${question} : ${listOfQuestions[question]}`);
-  //   let [correctAnswer] = listOfQuestions[question].slice(-1);
-  //   console.log(correctAnswer);
-  // }
 }
 function goToNextQuestion() {}
 // check if user input is correct
+
+function checkUserAnswer(userAnswer, correctAnswer) {
+  console.log(userAnswer, correctAnswer);
+}
 
 // show results - Correct or incorrect
 
