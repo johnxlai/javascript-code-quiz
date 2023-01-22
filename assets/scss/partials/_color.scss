@@ -11,6 +11,7 @@ $secondary: #c6adff;
 .btn {
   &-primary {
     background: $primary;
+    border: 0;
 
     &:hover {
       background: $secondary !important;

@@ -98,6 +98,7 @@ body {
 
 .btn-primary {
   background: #361c75;
+  border: 0;
 }
 .btn-primary:hover {
   background: #c6adff !important;
