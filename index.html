@@ -72,21 +72,23 @@
             <h4>
               Your final score is <span class="final-time-left">22</span>.
             </h4>
-            <div class="d-flex flex-wrap align-items-center">
+            <form
+              id="input-form"
+              action=""
+              class="d-flex flex-wrap align-items-center">
               <label for="name" class="me-4">Enter initials:</label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="user-name"
+                name="user-name"
                 required
-                minlength="4"
-                maxlength="8"
                 size="10" />
               <input
+                id="input-submit"
                 class="btn btn-primary px-3 ms-4"
                 type="submit"
                 value="Submit" />
-            </div>
+            </form>
           </div>
         </div>
       </section>

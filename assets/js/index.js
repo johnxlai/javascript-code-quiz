@@ -1,5 +1,8 @@
 const startBtn = document.querySelector('.start-btn');
 const btnsSection = document.querySelector('.btns-section');
+const inputForm = document.getElementById('input-form');
+const submitBtn = inputForm.querySelector('#input-submit');
+const userName = inputForm.querySelector('#user-name');
 
 //Display Elements
 const timerEl = document.querySelector('.timer-count');
@@ -13,7 +16,9 @@ const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
 const highScores = document.querySelector('.high-scores');
 
-let timerCount;
+//Global Vars
+let timerCount,
+  finalResult = {};
 
 //Start challenge
 function startGame() {
@@ -123,17 +128,26 @@ function endGame() {
   finalScore.classList.remove('d-none');
 
   finalResult = {
-    user: 'username',
     points: timerCount,
   };
-  finalTimeEl.textContent = finalResult.points;
-}
 
+  finalTimeEl.textContent = finalResult.points;
+  getInputvalue();
+}
 //stop game
 
 // Show final score
 
 //ask user to input initials
+function getInputvalue() {
+  inputForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    //Ad UserName to object
+    finalResult['userName'] = userName.value;
+    console.log(finalResult);
+  });
+}
 
 //store user name and points in local storage
 
