@@ -6,7 +6,10 @@ SO THAT I can gauge my progress compared to my peers
 
 
 # Description
-* This is a boilerplate
+* This is a Javascript Coding Quiz Challage Game!
+
+* This project uses bootstrap v5.3 and Google Font
+* Enjoy!
 
 
 # Screenshot

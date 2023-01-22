@@ -95,6 +95,9 @@ body {
 .text-primary {
   color: #361c75 !important;
 }
+.text-tertiary {
+  color: #d4c2fc !important;
+}
 
 .btn-primary {
   background: #361c75 !important;
