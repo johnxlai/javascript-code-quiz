@@ -4,6 +4,7 @@ const btnsSection = document.querySelector('.btns-section');
 //Display Elements
 const timerEl = document.querySelector('.timer-count');
 const questionEl = document.querySelector('.question');
+const resultEl = document.querySelector('.results');
 
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
@@ -79,9 +80,10 @@ while (n < lengthOfQuestions) {
 
     //add click listenser
     button.addEventListener('click', function () {
-      let userAnswer = button.getAttribute('data-index');
-      //pass arguements to check user result
+      //Get Data index number and change from string to number
+      let userAnswer = Number(button.getAttribute('data-index'));
 
+      //pass arguements to check user result
       checkUserAnswer(userAnswer, correctAnswer);
     });
   });
@@ -91,14 +93,20 @@ function goToNextQuestion() {}
 
 function checkUserAnswer(userAnswer, correctAnswer) {
   console.log(userAnswer, correctAnswer);
+
+  if (Number(userAnswer) != correctAnswer) {
+    resultEl.textContent = 'Wrong !';
+    return;
+  }
+  resultEl.textContent = 'Correct !';
 }
 
-// show results - Correct or incorrect
-
-//if correct continue
-
-//if answer is incorrect minus timer
-//show next question
+function showResults() {
+  // show results - Correct or incorrect
+  //if correct continue
+  //if answer is incorrect minus timer
+  //show next question
+}
 
 //end game either when there is no time left or all the questions have been asked
 
