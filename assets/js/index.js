@@ -10,6 +10,12 @@ const highScores = document.querySelector('.high-scores');
 
 let timerCount;
 
+const listOfQuestions = {
+  ABC: ['one', 'two', 'three', 1],
+  BCD: ['one', 'two', 'three', 2],
+  CDE: ['one', 'two', 'three', 3],
+};
+
 //Start challenge
 function startGame() {
   startBtn.addEventListener('click', () => {
