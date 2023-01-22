@@ -10,12 +10,6 @@ const highScores = document.querySelector('.high-scores');
 
 let timerCount;
 
-const listOfQuestions = {
-  ABC: ['one', 'two', 'three', 1],
-  BCD: ['one', 'two', 'three', 2],
-  CDE: ['one', 'two', 'three', 3],
-};
-
 //Start challenge
 function startGame() {
   startBtn.addEventListener('click', () => {
@@ -44,10 +38,23 @@ function startTimer() {
   }, 1000);
 }
 
-//show one question from the array of objects
+//show one question from the objects
+const listOfQuestions = {
+  ABC: ['one', 'two', 'three', 1],
+  BCD: ['one', 'two', 'three', 2],
+  CDE: ['one', 'two', 'three', 3],
+};
+
+//check lenghth of Questions to know how many times it needs to be looped
+let lengthOfQuestions = Object.keys(listOfQuestions).length;
+console.log(lengthOfQuestions);
 
 //display 4 possible answer
-
+for (const question in listOfQuestions) {
+  console.log(`${question} : ${listOfQuestions[question]}`);
+  let [correctAnswer] = listOfQuestions[question].slice(-1);
+  console.log(correctAnswer);
+}
 // check if user input is correct
 
 // show results - Correct or incorrect
@@ -77,6 +84,6 @@ function startTimer() {
 
 //Init
 function init() {
-  startGame();
+  // startGame();
 }
 init();
