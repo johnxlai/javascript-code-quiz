@@ -1,5 +1,3 @@
-// Init function to start the game on load
-
 //start challenge click
 
 //start timer
@@ -34,3 +32,13 @@
 
 //go back btn
 //clear high score function
+
+//Start Game
+function startGame() {
+  console.log('test');
+}
+//Init
+function init() {
+  startGame();
+}
+init();
