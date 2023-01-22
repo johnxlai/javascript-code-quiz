@@ -1,6 +1,31 @@
-//start challenge click
+const startBtn = document.querySelector('.start-btn');
+
+//Html Sections
+const startQuiz = document.querySelector('.start-quiz');
+const quizContent = document.querySelector('.quiz-content');
+const finalScore = document.querySelector('.final-score');
+const highScores = document.querySelector('.high-scores');
+
+let timerCount;
+
+//Start challenge
+function startGame() {
+  startBtn.addEventListener('click', () => {
+    startQuiz.classList.add('d-none');
+    quizContent.classList.remove('d-none');
+    timerCount = 70;
+    startTimer();
+  });
+}
 
 //start timer
+function startTimer() {
+  const gameTimer = setInterval(() => {
+    timerCount--;
+  }, 5000);
+}
+//ClearInterval
+// clearInterval(gameTimer);
 
 //show one question from the array of objects
 
@@ -33,10 +58,6 @@
 //go back btn
 //clear high score function
 
-//Start Game
-function startGame() {
-  console.log('test');
-}
 //Init
 function init() {
   startGame();
