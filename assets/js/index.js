@@ -3,6 +3,10 @@ const btnsSection = document.querySelector('.btns-section');
 const inputForm = document.getElementById('input-form');
 const submitBtn = inputForm.querySelector('#input-submit');
 const userName = inputForm.querySelector('#user-name');
+const goBack = document.querySelector('.go-back');
+const clearScore = document.querySelector('.clear-score');
+const displayUser = document.querySelector('.display-user');
+const displayScore = document.querySelector('.display-score');
 
 //Display Elements
 const timerEl = document.querySelector('.timer-count');
@@ -14,7 +18,7 @@ const finalTimeEl = document.querySelector('.final-time-left');
 const startQuiz = document.querySelector('.start-quiz');
 const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
-const highScores = document.querySelector('.high-scores');
+const scoreBoard = document.querySelector('.score-board');
 
 //Global Vars
 let timerCount,
@@ -147,6 +151,7 @@ function getInputvalue() {
     finalResult['userName'] = userName.value;
     console.log(finalResult);
     storeUserInfo(finalResult);
+    showScoreBoard();
   });
 }
 
@@ -156,11 +161,23 @@ function storeUserInfo(playerInfo) {
 }
 
 //show high scores display board
+function showScoreBoard() {
+  finalScore.classList.add('d-none');
+  scoreBoard.classList.remove('d-none');
+
+  displayUser.textContent = finalResult.userName;
+  displayScore.textContent = finalResult.points;
+  goBack.addEventListener('click', startGame);
+  clearScore.addEventListener('click', clearBoard);
+}
 
 //compare all users score and display highest point up to the top
 
 //go back btn
 //clear high score function
+function clearBoard() {
+  localStorage.clear();
+}
 
 //Init
 function init() {
