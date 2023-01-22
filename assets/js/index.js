@@ -16,12 +16,15 @@ let timerCount;
 
 //Start challenge
 function startGame() {
+  timerCount = 100;
+  startTimer();
+
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
-    timerCount = 5;
+    timerCount = 100;
     timerEl.textContent = timerCount;
-    startTimer();
+    // startTimer();
   });
 }
 
@@ -84,27 +87,28 @@ while (n < lengthOfQuestions) {
       let userAnswer = Number(button.getAttribute('data-index'));
 
       //pass arguements to check user result
-      checkUserAnswer(userAnswer, correctAnswer);
+      showResults(userAnswer, correctAnswer);
     });
   });
 }
 function goToNextQuestion() {}
 // check if user input is correct
 
-function checkUserAnswer(userAnswer, correctAnswer) {
+function showResults(userAnswer, correctAnswer) {
   console.log(userAnswer, correctAnswer);
 
+  // show results - Correct or incorrect
   if (Number(userAnswer) != correctAnswer) {
     resultEl.textContent = 'Wrong !';
+
+    //if answer is incorrect minus timer
+    timerCount -= 10;
+    timerEl.textContent = timerCount;
     return;
   }
-  resultEl.textContent = 'Correct !';
-}
 
-function showResults() {
-  // show results - Correct or incorrect
-  //if correct continue
-  //if answer is incorrect minus timer
+  //If Correct show correct
+  resultEl.textContent = 'Correct !';
   //show next question
 }
 
@@ -127,6 +131,6 @@ function showResults() {
 
 //Init
 function init() {
-  // startGame();
+  startGame();
 }
 init();
