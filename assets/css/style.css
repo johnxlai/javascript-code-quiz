@@ -27,27 +27,27 @@ h6 {
 }
 
 h1 {
-  font-size: 4rem;
-}
-
-h2 {
-  font-size: 3.5rem;
-}
-
-h3 {
   font-size: 3rem;
 }
 
-h4 {
+h2 {
   font-size: 2.5rem;
 }
 
-h5 {
+h3 {
   font-size: 2rem;
 }
 
-h6 {
+h4 {
+  font-size: 1.8rem;
+}
+
+h5 {
   font-size: 1.5rem;
+}
+
+h6 {
+  font-size: 1.2rem;
 }
 
 p {
@@ -86,4 +86,11 @@ ul {
 } */
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 /* @media screen and (min-width: 1200px) {
-} *//*# sourceMappingURL=style.css.map */
+} */
+.text-primary {
+  color: #361c75 !important;
+}
+
+.text-secondary {
+  color: #c6adff !important;
+}/*# sourceMappingURL=style.css.map */
