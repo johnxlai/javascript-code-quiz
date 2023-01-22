@@ -1,8 +1,19 @@
 $primary: #361c75;
 $secondary: #c6adff;
-.text-primary {
-  color: $primary !important;
+
+//Overwrite bootstrap btn colour
+.text {
+  &-primary {
+    color: $primary !important;
+  }
 }
-.text-secondary {
-  color: $secondary !important;
+
+.btn {
+  &-primary {
+    background: $primary;
+
+    &:hover {
+      background: $secondary !important;
+    }
+  }
 }

@@ -28,6 +28,7 @@ h6 {
 
 h1 {
   font-size: 3rem;
+  font-weight: bold;
 }
 
 h2 {
@@ -87,10 +88,17 @@ ul {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 /* @media screen and (min-width: 1200px) {
 } */
+body {
+  font-family: "Raleway", sans-serif;
+}
+
 .text-primary {
   color: #361c75 !important;
 }
 
-.text-secondary {
-  color: #c6adff !important;
+.btn-primary {
+  background: #361c75;
+}
+.btn-primary:hover {
+  background: #c6adff !important;
 }/*# sourceMappingURL=style.css.map */
