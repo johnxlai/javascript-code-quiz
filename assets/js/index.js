@@ -1,5 +1,7 @@
 const startBtn = document.querySelector('.start-btn');
 
+const timerEl = document.querySelector('.timer-count');
+
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
 const quizContent = document.querySelector('.quiz-content');
@@ -13,7 +15,8 @@ function startGame() {
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
-    timerCount = 70;
+    timerCount = 5;
+    timerEl.textContent = timerCount;
     startTimer();
   });
 }
@@ -22,10 +25,18 @@ function startGame() {
 function startTimer() {
   const gameTimer = setInterval(() => {
     timerCount--;
-  }, 5000);
+    timerEl.textContent = timerCount;
+
+    //End game if timer is over
+    if (timerCount === 0) {
+      timerEl.textContent = `Out of Time`;
+
+      //Stop timer
+      clearInterval(gameTimer);
+      //end game
+    }
+  }, 1000);
 }
-//ClearInterval
-// clearInterval(gameTimer);
 
 //show one question from the array of objects
 
