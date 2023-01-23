@@ -40,6 +40,7 @@ function startGame() {
     quizContent.classList.remove('d-none');
 
     startTimer();
+    displayQuestion();
   });
 }
 
@@ -75,20 +76,42 @@ function startTimer() {
 
 //show one question from the objects
 const listOfQuestions = {
-  ABC: ['one', 'two', 'three', 'four', 1],
-  // BCD: ['one', 'two', 'three', 'four', 2],
-  // CDE: ['one', 'two', 'three', 'four', 3],
+  'Commonly used data types DO Not Include': [
+    'strings',
+    'booleans',
+    'alert',
+    'numbers',
+    2,
+  ],
+  'The condition in an if / else statement is enclosed with _______.': [
+    'quotes',
+    'curly brackets',
+    'parenthesis',
+    'square brackets',
+    1,
+  ],
+  'Arrays in JavaScript can be used to store': [
+    'numbers and strings',
+    'other arrays',
+    'booleans',
+    'all of the above',
+    1,
+  ],
 };
 
 //check length of Questions to know how many times it needs to be looped
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
 
-let n = 0;
-while (n < lengthOfQuestions) {
-  let chosenQuestion = Object.keys(listOfQuestions)[n];
+let questionIndex = 0;
+
+//any of these buttons click check results
+
+function displayQuestion() {
+  clearQuestion();
+
+  let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
   let correctAnswer = chosenChoices.pop();
-  n++;
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
 
@@ -99,30 +122,53 @@ while (n < lengthOfQuestions) {
   chosenChoices.forEach((choice) => {
     let indexOfBtn = chosenChoices.indexOf(choice);
     let button = document.createElement('button');
-    //Add btn style
-    button.setAttribute('class', 'btn btn-primary mb-3 p-3');
 
-    //set index number in the array
+    //Add btn style and data index
+    button.setAttribute('class', 'btn-choice btn btn-primary mb-3 p-3');
     button.setAttribute('data-index', indexOfBtn);
+
     //Add correct text for each btn
     button.appendChild(document.createTextNode(`${indexOfBtn + 1}. ${choice}`));
     btnsSection.appendChild(button);
     console.log(choice);
 
     //add click listenser
-    button.addEventListener('click', function () {
+    button.addEventListener('click', () => {
       //Get Data index number and change from string to number
       let userAnswer = Number(button.getAttribute('data-index'));
 
-      //pass arguements to check user result
       showResults(userAnswer, correctAnswer);
+      questionIndex++;
+
+      if (questionIndex < lengthOfQuestions) {
+        displayQuestion();
+      } else {
+        endGame();
+      }
     });
   });
 }
 
-function goToNextQuestion() {
-  endGame();
+//Remove Old question and btns
+function clearQuestion() {
+  questionEl.textContent = '';
+  document.querySelectorAll('.btn-choice').forEach((btn) => {
+    btn.remove();
+  });
 }
+
+// if (questionIndex < lengthOfQuestions) {
+//   console.log(`questionIndex ${questionIndex}`);
+//   questionIndex++;
+
+//   //pass arguements to check user result
+// } else {
+//   console.log('no more questions');
+// }
+
+//go to next question
+
+//if it is last question go to end of game
 
 // check if user input is correct
 function showResults(userAnswer, correctAnswer) {
@@ -141,7 +187,6 @@ function showResults(userAnswer, correctAnswer) {
   //If Correct show correct
   resultEl.textContent = 'Correct !';
   //show next question
-  goToNextQuestion();
 }
 
 //end game either when there is no time left or all the questions have been asked
