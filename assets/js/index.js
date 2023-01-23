@@ -107,23 +107,30 @@ const listOfQuestions = {
     'square brackets',
     1,
   ],
-  'Arrays in JavaScript can be used to store': [
+  'Arrays in JavaScript can be used to store _______.': [
     'numbers and strings',
     'other arrays',
     'booleans',
     'all of the above',
     3,
   ],
+  'String values must be enclosed within _______ when being assigned to variables.':
+    ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
+  'A very useful tool used during development and debugging for printing content to the debugger is:':
+    ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
 };
 
 //check length of Questions to know how many times it needs to be looped
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
 
-//any of these buttons click check results
-
 function displayQuestion() {
+  //Hide unwanted sections
   startQuiz.classList.add('d-none');
+
+  //Show quiz
   quizSection.classList.remove('d-none');
+
+  //Remove old btns and Questions from last round
   restartQuestion();
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
