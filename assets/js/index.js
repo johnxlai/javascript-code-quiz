@@ -28,19 +28,16 @@ let timerCount,
 
 //Start challenge
 function startGame() {
-  // timerCount = 100;
-  // startTimer();
   scoreBoard.classList.add('d-none');
   startQuiz.classList.remove('d-none');
   nav.classList.remove('d-none');
+  timerCount = 0;
+  timerEl.textContent = timerCount;
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
-    timerContainer.classList.remove('d-none');
 
-    timerCount = 100;
-    timerEl.textContent = timerCount;
     startTimer();
   });
 }
@@ -57,6 +54,9 @@ viewScoreBoard.addEventListener('click', function () {
 
 //start timer
 function startTimer() {
+  timerCount = 100;
+  timerEl.textContent = timerCount;
+
   const gameTimer = setInterval(() => {
     timerCount--;
     timerEl.textContent = timerCount;
