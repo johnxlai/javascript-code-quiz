@@ -7,6 +7,7 @@ const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
 const displayUser = document.querySelector('.display-user');
 const displayScore = document.querySelector('.display-score');
+const viewScoreBoard = document.querySelector('.view-high-scores');
 
 //Display Elements
 const timerEl = document.querySelector('.timer-count');
@@ -26,17 +27,28 @@ let timerCount,
 
 //Start challenge
 function startGame() {
-  timerCount = 100;
-  startTimer();
+  // timerCount = 100;
+  // startTimer();
+  scoreBoard.classList.add('d-none');
+  startQuiz.classList.remove('d-none');
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
     timerCount = 100;
     timerEl.textContent = timerCount;
-    // startTimer();
+    startTimer();
   });
 }
+
+//View high scores btn
+viewScoreBoard.addEventListener('click', function () {
+  startQuiz.classList.add('d-none');
+  quizContent.classList.add('d-none');
+  finalScore.classList.add('d-none');
+
+  showScoreBoard();
+});
 
 //start timer
 function startTimer() {
