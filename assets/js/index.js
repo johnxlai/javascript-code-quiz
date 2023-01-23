@@ -14,6 +14,7 @@ const timerEl = document.querySelector('.timer-count');
 const questionEl = document.querySelector('.question');
 const resultEl = document.querySelector('.results');
 const finalTimeEl = document.querySelector('.final-time-left');
+const nav = document.querySelector('nav');
 
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
@@ -31,10 +32,13 @@ function startGame() {
   // startTimer();
   scoreBoard.classList.add('d-none');
   startQuiz.classList.remove('d-none');
+  nav.classList.remove('d-none');
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
+    timerContainer.classList.remove('d-none');
+
     timerCount = 100;
     timerEl.textContent = timerCount;
     startTimer();
@@ -46,6 +50,7 @@ viewScoreBoard.addEventListener('click', function () {
   startQuiz.classList.add('d-none');
   quizContent.classList.add('d-none');
   finalScore.classList.add('d-none');
+  nav.classList.add('d-none');
 
   showScoreBoard();
 });
