@@ -62,7 +62,7 @@ viewHighScores.addEventListener('click', function () {
 
 //start timer
 function startTimer() {
-  timerCount = 100;
+  timerCount = 50;
   timerEl.textContent = timerCount;
 
   const gameTimer = setInterval(() => {
@@ -70,12 +70,15 @@ function startTimer() {
     timerEl.textContent = timerCount;
 
     //End game if timer is over
-    if (timerCount < 0) {
+    if (timerCount <= 0) {
       timerEl.textContent = `Out of Time`;
 
       //Stop timer
       clearInterval(gameTimer);
-      //end game
+
+      //If user goes to the negative points this resets to zero
+      timerCount = 0;
+      endGame();
     }
   }, 1000);
 }
@@ -197,8 +200,8 @@ function showResults(userAnswer, correctAnswer) {
     resultEl.textContent = 'Wrong !';
 
     //if answer is incorrect minus mb-0 py-3 ms-4
-
     timerCount -= 10;
+
     timerEl.textContent = timerCount;
     return;
   }
@@ -215,9 +218,12 @@ function showScoreBoard() {
   quizSection.classList.add('d-none');
   nav.classList.add('d-none');
 
+  //show Scoreboard
   scoreBoard.classList.remove('d-none');
   displayUser.textContent = finalResult.userName;
   displayScore.textContent = finalResult.points;
+
+  //add click listeners on btns
   goBack.addEventListener('click', startGame);
   clearScore.addEventListener('click', clearBoard);
 }
@@ -247,8 +253,7 @@ function storeUserInfo(playerInfo) {
 
 //compare all users score and display highest point up to the top
 
-//go back btn
-//clear high score function
+//clear high score btn
 function clearBoard() {
   displayUser.textContent = '';
   displayScore.textContent = '';
@@ -267,9 +272,3 @@ function init() {
   startGame();
 }
 init();
-
-//view highscores show board and hide nav
-
-// goback btn restarts the game
-
-//Clear High scores - clears localstorage
