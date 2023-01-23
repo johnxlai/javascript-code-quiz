@@ -36,7 +36,7 @@ function startGame() {
   questionIndex = 0;
   timerEl.textContent = timerCount;
   resultEl.textContent = '';
-  clearQuestion();
+  restartQuestion();
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
@@ -108,11 +108,11 @@ let lengthOfQuestions = Object.keys(listOfQuestions).length;
 //any of these buttons click check results
 
 function displayQuestion() {
-  clearQuestion();
+  restartQuestion();
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
-  let [correctAnswer] = chosenChoices.slice(-1);
+  let correctAnswer = chosenChoices.pop();
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
 
@@ -152,7 +152,7 @@ function displayQuestion() {
 }
 
 //Remove Old question and btns
-function clearQuestion() {
+function restartQuestion() {
   questionEl.textContent = '';
   document.querySelectorAll('.btn-choice').forEach((btn) => {
     btn.remove();
