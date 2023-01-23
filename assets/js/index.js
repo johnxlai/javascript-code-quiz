@@ -7,7 +7,7 @@ const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
 const displayUser = document.querySelector('.display-user');
 const displayScore = document.querySelector('.display-score');
-const viewScoreBoard = document.querySelector('.view-high-scores');
+const viewHighScores = document.querySelector('.view-high-scores');
 
 //Display Elements
 const timerEl = document.querySelector('.timer-count');
@@ -32,6 +32,9 @@ function startGame() {
   //start timer
   //restart question
   //display question
+  startQuiz.classList.remove('d-none');
+  nav.classList.remove('d-none');
+  scoreBoard.classList.add('d-none');
 
   timerCount = 0;
   questionIndex = 0;
@@ -46,7 +49,8 @@ function startGame() {
 }
 
 //View high scores btn
-viewScoreBoard.addEventListener('click', function () {
+viewHighScores.addEventListener('click', function () {
+  nav.classList.add('d-none');
   showScoreBoard();
 });
 
@@ -182,6 +186,16 @@ function endGame() {
   getInputvalue();
 }
 
+//show high scores display board
+function showScoreBoard() {
+  startQuiz.classList.add('d-none');
+  scoreBoard.classList.remove('d-none');
+  displayUser.textContent = finalResult.userName;
+  displayScore.textContent = finalResult.points;
+  goBack.addEventListener('click', startGame);
+  clearScore.addEventListener('click', clearBoard);
+}
+
 // Show final score
 //ask user to input initials
 function getInputvalue() {
@@ -192,21 +206,12 @@ function getInputvalue() {
     finalResult['userName'] = userName.value;
     console.log(finalResult);
     storeUserInfo(finalResult);
-    showScoreBoard();
   });
 }
 
 //store user name and points in local storage
 function storeUserInfo(playerInfo) {
   localStorage.setItem('playerList', JSON.stringify(playerInfo));
-}
-
-//show high scores display board
-function showScoreBoard() {
-  displayUser.textContent = finalResult.userName;
-  displayScore.textContent = finalResult.points;
-  goBack.addEventListener('click', startGame);
-  clearScore.addEventListener('click', clearBoard);
 }
 
 //compare all users score and display highest point up to the top
