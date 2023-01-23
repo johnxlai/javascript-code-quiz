@@ -1,7 +1,6 @@
 const startBtn = document.querySelector('.start-btn');
 const btnsSection = document.querySelector('.btns-section');
 const inputForm = document.getElementById('input-form');
-const submitBtn = inputForm.querySelector('#input-submit');
 const userName = inputForm.querySelector('#user-name');
 const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
@@ -33,8 +32,10 @@ function startGame() {
   //start timer
   //restart question
   //display question
-  startQuiz.classList.remove('d-none');
   nav.classList.remove('d-none');
+  startQuiz.classList.remove('d-none');
+  //Hide quiz section and scoreboard
+  quizSection.classList.add('d-none');
   scoreBoard.classList.add('d-none');
 
   timerCount = 0;
@@ -193,7 +194,11 @@ function showResults(userAnswer, correctAnswer) {
 
 //show high scores display board
 function showScoreBoard() {
+  //hide quiz, nav
   startQuiz.classList.add('d-none');
+  quizSection.classList.add('d-none');
+  nav.classList.add('d-none');
+
   scoreBoard.classList.remove('d-none');
   displayUser.textContent = finalResult.userName;
   displayScore.textContent = finalResult.points;
@@ -206,6 +211,11 @@ function showScoreBoard() {
 function getInputvalue() {
   inputForm.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    //Hide input form
+    quizSection.classList.add('d-none');
+    //show high score board
+    showScoreBoard();
 
     //Ad UserName to object
     finalResult['userName'] = userName.value;
@@ -241,3 +251,9 @@ function init() {
   startGame();
 }
 init();
+
+//view highscores show board and hide nav
+
+// goback btn restarts the game
+
+//Clear High scores - clears localstorage
