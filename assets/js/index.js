@@ -45,6 +45,10 @@ function startGame() {
   restartQuestion();
 
   startBtn.addEventListener('click', () => {
+    quizSection.classList.remove('d-none');
+    quizContent.classList.remove('d-none');
+    finalScore.classList.add('d-none');
+
     startTimer();
     displayQuestion();
   });
@@ -124,7 +128,7 @@ function displayQuestion() {
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
-  let correctAnswer = chosenChoices.pop();
+  let [correctAnswer] = chosenChoices.slice(-1);
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
 
