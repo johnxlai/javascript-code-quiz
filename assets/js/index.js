@@ -18,7 +18,7 @@ const nav = document.querySelector('nav');
 
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
-const quizContent = document.querySelector('.quiz-content');
+const quizSection = document.querySelector('.quiz-section');
 const finalScore = document.querySelector('.final-score');
 const scoreBoard = document.querySelector('.score-board');
 
@@ -29,9 +29,10 @@ let timerCount,
 
 //Start challenge
 function startGame() {
-  scoreBoard.classList.add('d-none');
-  startQuiz.classList.remove('d-none');
-  nav.classList.remove('d-none');
+  //start timer
+  //restart question
+  //display question
+
   timerCount = 0;
   questionIndex = 0;
   timerEl.textContent = timerCount;
@@ -39,9 +40,6 @@ function startGame() {
   restartQuestion();
 
   startBtn.addEventListener('click', () => {
-    startQuiz.classList.add('d-none');
-    quizContent.classList.remove('d-none');
-
     startTimer();
     displayQuestion();
   });
@@ -49,11 +47,6 @@ function startGame() {
 
 //View high scores btn
 viewScoreBoard.addEventListener('click', function () {
-  startQuiz.classList.add('d-none');
-  quizContent.classList.add('d-none');
-  finalScore.classList.add('d-none');
-  nav.classList.add('d-none');
-
   showScoreBoard();
 });
 
@@ -181,9 +174,6 @@ function showResults(userAnswer, correctAnswer) {
 
 //end game either when there is no time left or all the questions have been asked
 function endGame() {
-  quizContent.classList.add('d-none');
-  finalScore.classList.remove('d-none');
-
   finalResult = {
     points: timerCount,
   };
@@ -213,9 +203,6 @@ function storeUserInfo(playerInfo) {
 
 //show high scores display board
 function showScoreBoard() {
-  finalScore.classList.add('d-none');
-  scoreBoard.classList.remove('d-none');
-
   displayUser.textContent = finalResult.userName;
   displayScore.textContent = finalResult.points;
   goBack.addEventListener('click', startGame);
