@@ -36,6 +36,7 @@ function startGame() {
   questionIndex = 0;
   timerEl.textContent = timerCount;
   resultEl.textContent = '';
+  clearQuestion();
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
@@ -97,7 +98,7 @@ const listOfQuestions = {
     'other arrays',
     'booleans',
     'all of the above',
-    1,
+    3,
   ],
 };
 
@@ -111,7 +112,7 @@ function displayQuestion() {
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
-  let correctAnswer = chosenChoices.pop();
+  let [correctAnswer] = chosenChoices.slice(-1);
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
 
