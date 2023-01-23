@@ -229,6 +229,8 @@ function showScoreBoard() {
 function clearBoard() {
   displayUser.textContent = '';
   displayScore.textContent = '';
+  finalResult['userName'] = '';
+  finalResult['points'] = '';
   localStorage.clear();
 }
 
