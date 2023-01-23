@@ -33,6 +33,7 @@ function startGame() {
   nav.classList.remove('d-none');
   timerCount = 0;
   timerEl.textContent = timerCount;
+  resultEl.textContent = '';
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
