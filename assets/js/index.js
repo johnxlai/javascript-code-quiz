@@ -19,6 +19,7 @@ const nav = document.querySelector('nav');
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
 const quizSection = document.querySelector('.quiz-section');
+const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
 const scoreBoard = document.querySelector('.score-board');
 
@@ -73,6 +74,17 @@ function startTimer() {
     }
   }, 1000);
 }
+//end game either when there is no time left or all the questions have been asked
+function endGame() {
+  quizContent.classList.add('d-none');
+  finalScore.classList.remove('d-none');
+  finalResult = {
+    points: timerCount,
+  };
+
+  finalTimeEl.textContent = finalResult.points;
+  getInputvalue();
+}
 
 //show one question from the objects
 const listOfQuestions = {
@@ -105,6 +117,8 @@ let lengthOfQuestions = Object.keys(listOfQuestions).length;
 //any of these buttons click check results
 
 function displayQuestion() {
+  startQuiz.classList.add('d-none');
+  quizSection.classList.remove('d-none');
   restartQuestion();
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
@@ -142,6 +156,7 @@ function displayQuestion() {
         displayQuestion();
       } else {
         //No more questions
+        console.log('end of game');
         endGame();
       }
     });
@@ -174,16 +189,6 @@ function showResults(userAnswer, correctAnswer) {
   //If Correct show correct
   resultEl.textContent = 'Correct !';
   //show next question
-}
-
-//end game either when there is no time left or all the questions have been asked
-function endGame() {
-  finalResult = {
-    points: timerCount,
-  };
-
-  finalTimeEl.textContent = finalResult.points;
-  getInputvalue();
 }
 
 //show high scores display board
