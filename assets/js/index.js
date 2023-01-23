@@ -136,35 +136,40 @@ function displayQuestion() {
   questionEl.textContent = chosenQuestion;
 
   //loop thru the array and generate a button for each element
-  chosenChoices.forEach((choice) => {
-    let indexOfBtn = chosenChoices.indexOf(choice);
-    let button = document.createElement('button');
+  chosenChoices.forEach((choice, index, array) => {
+    // Exclude the last item in the array (which is the answer)
+    // Create btn for all choice except last
+    if (index !== array.length - 1) {
+      let indexOfBtn = chosenChoices.indexOf(choice);
+      let button = document.createElement('button');
 
-    //Add btn style and data index
-    button.setAttribute('class', 'btn-choice btn btn-primary mb-3 p-3');
-    button.setAttribute('data-index', indexOfBtn);
+      //Add btn style and data index
+      button.setAttribute('class', 'btn-choice btn btn-primary mb-3 p-3');
+      button.setAttribute('data-index', indexOfBtn);
 
-    //Add correct text for each btn
-    button.appendChild(document.createTextNode(`${indexOfBtn + 1}. ${choice}`));
-    btnsSection.appendChild(button);
-    console.log(choice);
+      //Add correct text for each btn
+      button.appendChild(
+        document.createTextNode(`${indexOfBtn + 1}. ${choice}`)
+      );
+      btnsSection.appendChild(button);
+      console.log(choice);
 
-    //add click listenser
-    button.addEventListener('click', () => {
-      //Get Data index number and change from string to number
-      let userAnswer = Number(button.getAttribute('data-index'));
+      //add click listenser
+      button.addEventListener('click', () => {
+        //Get Data index number and change from string to number
+        let userAnswer = Number(button.getAttribute('data-index'));
 
-      showResults(userAnswer, correctAnswer);
-      questionIndex++;
+        showResults(userAnswer, correctAnswer);
+        questionIndex++;
 
-      if (questionIndex < lengthOfQuestions) {
-        displayQuestion();
-      } else {
-        //No more questions
-        console.log('end of game');
-        endGame();
-      }
-    });
+        if (questionIndex < lengthOfQuestions) {
+          displayQuestion();
+        } else {
+          //No more questions
+          endGame();
+        }
+      });
+    }
   });
 }
 
