@@ -25,6 +25,7 @@ const scoreBoard = document.querySelector('.score-board');
 //Global Vars
 let timerCount,
   questionIndex,
+  gameTimer,
   finalResult = {};
 
 //Start challenge
@@ -65,25 +66,22 @@ function startTimer() {
   timerCount = 50;
   timerEl.textContent = timerCount;
 
-  const gameTimer = setInterval(() => {
+  gameTimer = setInterval(() => {
     timerCount--;
     timerEl.textContent = timerCount;
 
     //End game if timer is over
     if (timerCount <= 0) {
       timerEl.textContent = `Out of Time`;
-
-      //Stop timer
-      clearInterval(gameTimer);
-
-      //If user goes to the negative points this resets to zero
-      timerCount = 0;
       endGame();
     }
   }, 1000);
 }
 //end game either when there is no time left or all the questions have been asked
 function endGame() {
+  //Stop timer
+  clearInterval(gameTimer);
+
   quizContent.classList.add('d-none');
   finalScore.classList.remove('d-none');
   finalResult = {
