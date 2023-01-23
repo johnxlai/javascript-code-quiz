@@ -24,6 +24,7 @@ const scoreBoard = document.querySelector('.score-board');
 
 //Global Vars
 let timerCount,
+  questionIndex,
   finalResult = {};
 
 //Start challenge
@@ -32,6 +33,7 @@ function startGame() {
   startQuiz.classList.remove('d-none');
   nav.classList.remove('d-none');
   timerCount = 0;
+  questionIndex = 0;
   timerEl.textContent = timerCount;
   resultEl.textContent = '';
 
@@ -102,8 +104,6 @@ const listOfQuestions = {
 //check length of Questions to know how many times it needs to be looped
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
 
-let questionIndex = 0;
-
 //any of these buttons click check results
 
 function displayQuestion() {
@@ -143,6 +143,7 @@ function displayQuestion() {
       if (questionIndex < lengthOfQuestions) {
         displayQuestion();
       } else {
+        //No more questions
         endGame();
       }
     });
@@ -157,19 +158,6 @@ function clearQuestion() {
   });
 }
 
-// if (questionIndex < lengthOfQuestions) {
-//   console.log(`questionIndex ${questionIndex}`);
-//   questionIndex++;
-
-//   //pass arguements to check user result
-// } else {
-//   console.log('no more questions');
-// }
-
-//go to next question
-
-//if it is last question go to end of game
-
 // check if user input is correct
 function showResults(userAnswer, correctAnswer) {
   console.log(userAnswer, correctAnswer);
@@ -178,7 +166,8 @@ function showResults(userAnswer, correctAnswer) {
   if (Number(userAnswer) != correctAnswer) {
     resultEl.textContent = 'Wrong !';
 
-    //if answer is incorrect minus timer
+    //if answer is incorrect minus mb-0 py-3 ms-4
+
     timerCount -= 10;
     timerEl.textContent = timerCount;
     return;
@@ -201,10 +190,8 @@ function endGame() {
   finalTimeEl.textContent = finalResult.points;
   getInputvalue();
 }
-//stop game
 
 // Show final score
-
 //ask user to input initials
 function getInputvalue() {
   inputForm.addEventListener('submit', function (e) {
@@ -239,6 +226,8 @@ function showScoreBoard() {
 //go back btn
 //clear high score function
 function clearBoard() {
+  displayUser.textContent = '';
+  displayScore.textContent = '';
   localStorage.clear();
 }
 
