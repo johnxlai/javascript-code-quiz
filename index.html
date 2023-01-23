@@ -60,27 +60,17 @@
       </section>
 
       <!-- Questions -->
-      <section
-        class="quiz-content text-center d-none"
-        title="Quiz questions for javascript">
+      <section class="text-center d-none" title="Quiz questions for javascript">
         <div class="row">
           <div
-            class="col-12 col-md-8 mx-auto d-flex flex-column align-items-start">
+            class="quiz-content col-12 col-md-8 mx-auto d-flex flex-column align-items-start">
             <h2 class="question h1 mb-3"><strong>Question ONE</strong></h2>
             <div class="btns-section d-flex flex-column"></div>
           </div>
-          <div class="col-12 col-md-8 mx-auto align-left text-start">
-            <h3 class="results border-top my-3 py-3 text-secondary">Answer</h3>
-          </div>
-        </div>
-      </section>
 
-      <!-- Final Score board  and fill in player info-->
-      <section
-        class="final-score d-none"
-        title="Final Score and fill in player info">
-        <div class="row">
-          <div class="col-12 col-md-8 mx-auto">
+          <div
+            class="final-score col-12 col-md-8 mx-auto d-none"
+            title="Final Score and fill in player info">
             <h2 class="h1 mb-3"><strong>All Done!</strong></h2>
             <h4>
               Your final score is <span class="final-time-left">22</span>.
@@ -102,6 +92,10 @@
                 type="submit"
                 value="Submit" />
             </form>
+          </div>
+
+          <div class="results col-12 col-md-8 mx-auto align-left text-start">
+            <h3 class="border-top my-3 py-3 text-secondary">Answer</h3>
           </div>
         </div>
       </section>
@@ -135,6 +129,7 @@
         </div>
       </section>
     </main>
+
     <footer>
       <div class="row">
         <div class="col">
