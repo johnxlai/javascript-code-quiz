@@ -24,6 +24,7 @@ const scoreBoard = document.querySelector('.score-board');
 
 //Global Vars
 let timerCount,
+  questionIndex,
   finalResult = {};
 
 //Start challenge
@@ -32,13 +33,17 @@ function startGame() {
   startQuiz.classList.remove('d-none');
   nav.classList.remove('d-none');
   timerCount = 0;
+  questionIndex = 0;
   timerEl.textContent = timerCount;
+  resultEl.textContent = '';
+  restartQuestion();
 
   startBtn.addEventListener('click', () => {
     startQuiz.classList.add('d-none');
     quizContent.classList.remove('d-none');
 
     startTimer();
+    displayQuestion();
   });
 }
 
@@ -74,20 +79,40 @@ function startTimer() {
 
 //show one question from the objects
 const listOfQuestions = {
-  ABC: ['one', 'two', 'three', 'four', 1],
-  // BCD: ['one', 'two', 'three', 'four', 2],
-  // CDE: ['one', 'two', 'three', 'four', 3],
+  'Commonly used data types DO Not Include': [
+    'strings',
+    'booleans',
+    'alert',
+    'numbers',
+    2,
+  ],
+  'The condition in an if / else statement is enclosed with _______.': [
+    'quotes',
+    'curly brackets',
+    'parenthesis',
+    'square brackets',
+    1,
+  ],
+  'Arrays in JavaScript can be used to store': [
+    'numbers and strings',
+    'other arrays',
+    'booleans',
+    'all of the above',
+    3,
+  ],
 };
 
 //check length of Questions to know how many times it needs to be looped
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
 
-let n = 0;
-while (n < lengthOfQuestions) {
-  let chosenQuestion = Object.keys(listOfQuestions)[n];
+//any of these buttons click check results
+
+function displayQuestion() {
+  restartQuestion();
+
+  let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
   let correctAnswer = chosenChoices.pop();
-  n++;
 
   console.log(chosenQuestion, chosenChoices, correctAnswer);
 
@@ -98,29 +123,40 @@ while (n < lengthOfQuestions) {
   chosenChoices.forEach((choice) => {
     let indexOfBtn = chosenChoices.indexOf(choice);
     let button = document.createElement('button');
-    //Add btn style
-    button.setAttribute('class', 'btn btn-primary mb-3 p-3');
 
-    //set index number in the array
+    //Add btn style and data index
+    button.setAttribute('class', 'btn-choice btn btn-primary mb-3 p-3');
     button.setAttribute('data-index', indexOfBtn);
+
     //Add correct text for each btn
     button.appendChild(document.createTextNode(`${indexOfBtn + 1}. ${choice}`));
     btnsSection.appendChild(button);
     console.log(choice);
 
     //add click listenser
-    button.addEventListener('click', function () {
+    button.addEventListener('click', () => {
       //Get Data index number and change from string to number
       let userAnswer = Number(button.getAttribute('data-index'));
 
-      //pass arguements to check user result
       showResults(userAnswer, correctAnswer);
+      questionIndex++;
+
+      if (questionIndex < lengthOfQuestions) {
+        displayQuestion();
+      } else {
+        //No more questions
+        endGame();
+      }
     });
   });
 }
 
-function goToNextQuestion() {
-  endGame();
+//Remove Old question and btns
+function restartQuestion() {
+  questionEl.textContent = '';
+  document.querySelectorAll('.btn-choice').forEach((btn) => {
+    btn.remove();
+  });
 }
 
 // check if user input is correct
@@ -131,7 +167,8 @@ function showResults(userAnswer, correctAnswer) {
   if (Number(userAnswer) != correctAnswer) {
     resultEl.textContent = 'Wrong !';
 
-    //if answer is incorrect minus timer
+    //if answer is incorrect minus mb-0 py-3 ms-4
+
     timerCount -= 10;
     timerEl.textContent = timerCount;
     return;
@@ -140,7 +177,6 @@ function showResults(userAnswer, correctAnswer) {
   //If Correct show correct
   resultEl.textContent = 'Correct !';
   //show next question
-  goToNextQuestion();
 }
 
 //end game either when there is no time left or all the questions have been asked
@@ -155,10 +191,8 @@ function endGame() {
   finalTimeEl.textContent = finalResult.points;
   getInputvalue();
 }
-//stop game
 
 // Show final score
-
 //ask user to input initials
 function getInputvalue() {
   inputForm.addEventListener('submit', function (e) {
@@ -193,6 +227,8 @@ function showScoreBoard() {
 //go back btn
 //clear high score function
 function clearBoard() {
+  displayUser.textContent = '';
+  displayScore.textContent = '';
   localStorage.clear();
 }
 
