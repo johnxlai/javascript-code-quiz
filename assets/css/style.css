@@ -92,6 +92,10 @@ body {
   font-family: "Raleway", sans-serif;
 }
 
+input[id=user-name] {
+  min-width: 300px;
+}
+
 .text-primary {
   color: #361c75 !important;
 }
