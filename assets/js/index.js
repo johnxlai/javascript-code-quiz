@@ -101,21 +101,21 @@ const listOfQuestions = {
     'numbers',
     2,
   ],
-  'The condition in an if / else statement is enclosed with _______.': [
+  'The condition in an if / else statement is enclosed with ＿＿＿＿ .': [
     'quotes',
     'curly brackets',
     'parenthesis',
     'square brackets',
     1,
   ],
-  'Arrays in JavaScript can be used to store _______.': [
+  'Arrays in JavaScript can be used to store ＿＿＿＿.': [
     'numbers and strings',
     'other arrays',
     'booleans',
     'all of the above',
     3,
   ],
-  'String values must be enclosed within _______ when being assigned to variables.':
+  'String values must be enclosed within ＿＿＿＿ when being assigned to variables.':
     ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
   'A very useful tool used during development and debugging for printing content to the debugger is:':
     ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
