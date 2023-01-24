@@ -26,13 +26,11 @@ const scoreBoard = document.querySelector('.score-board');
 let timerCount,
   questionIndex,
   gameTimer,
+  playersList = [],
   finalResult = {};
 
 //Start challenge
 function startGame() {
-  //start timer
-  //restart question
-  //display question
   nav.classList.remove('d-none');
   startQuiz.classList.remove('d-none');
   //Hide quiz section and scoreboard
@@ -101,24 +99,24 @@ const listOfQuestions = {
     'numbers',
     2,
   ],
-  'The condition in an if / else statement is enclosed with _______.': [
-    'quotes',
-    'curly brackets',
-    'parenthesis',
-    'square brackets',
-    1,
-  ],
-  'Arrays in JavaScript can be used to store _______.': [
-    'numbers and strings',
-    'other arrays',
-    'booleans',
-    'all of the above',
-    3,
-  ],
-  'String values must be enclosed within _______ when being assigned to variables.':
-    ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
-  'A very useful tool used during development and debugging for printing content to the debugger is:':
-    ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
+  // 'The condition in an if / else statement is enclosed with _______.': [
+  //   'quotes',
+  //   'curly brackets',
+  //   'parenthesis',
+  //   'square brackets',
+  //   1,
+  // ],
+  // 'Arrays in JavaScript can be used to store _______.': [
+  //   'numbers and strings',
+  //   'other arrays',
+  //   'booleans',
+  //   'all of the above',
+  //   3,
+  // ],
+  // 'String values must be enclosed within _______ when being assigned to variables.':
+  //   ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
+  // 'A very useful tool used during development and debugging for printing content to the debugger is:':
+  //   ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
 };
 
 //check length of Questions to know how many times it needs to be looped
@@ -138,7 +136,7 @@ function displayQuestion() {
   let chosenChoices = listOfQuestions[chosenQuestion];
   let [correctAnswer] = chosenChoices.slice(-1);
 
-  console.log(chosenQuestion, chosenChoices, correctAnswer);
+  // console.log(chosenQuestion, chosenChoices, correctAnswer);
 
   //display the question
   questionEl.textContent = chosenQuestion;
@@ -160,7 +158,7 @@ function displayQuestion() {
         document.createTextNode(`${indexOfBtn + 1}. ${choice}`)
       );
       btnsSection.appendChild(button);
-      console.log(choice);
+      // console.log(choice);
 
       //add click listenser
       button.addEventListener('click', () => {
@@ -191,7 +189,7 @@ function restartQuestion() {
 
 // check if user input is correct
 function showResults(userAnswer, correctAnswer) {
-  console.log(userAnswer, correctAnswer);
+  // console.log(userAnswer, correctAnswer);
 
   // show results - Correct or incorrect
   if (Number(userAnswer) != correctAnswer) {
@@ -226,6 +224,15 @@ function showScoreBoard() {
   clearScore.addEventListener('click', clearBoard);
 }
 
+//clear high score btn
+function clearBoard() {
+  displayUser.textContent = '';
+  displayScore.textContent = '';
+  finalResult['userName'] = '';
+  finalResult['points'] = '';
+  localStorage.clear();
+}
+
 // Show final score
 //ask user to input initials
 function getInputvalue() {
@@ -237,36 +244,30 @@ function getInputvalue() {
     //show high score board
     showScoreBoard();
 
-    //Ad UserName to object
+    //Add UserName to object
     finalResult['userName'] = userName.value;
-    console.log(finalResult);
-    storeUserInfo(finalResult);
+
+    playersList.push({ finalResult });
+    storeUserInfo();
   });
 }
 
 //store user name and points in local storage
-function storeUserInfo(playerInfo) {
-  localStorage.setItem('playerList', JSON.stringify(playerInfo));
+function storeUserInfo() {
+  localStorage.setItem('playersList', JSON.stringify(playersList));
 }
 
 //compare all users score and display highest point up to the top
 
-//clear high score btn
-function clearBoard() {
-  displayUser.textContent = '';
-  displayScore.textContent = '';
-  finalResult['userName'] = '';
-  finalResult['points'] = '';
-  localStorage.clear();
-}
-
 //Init
 function init() {
-  let storedPlayerList = JSON.parse(localStorage.getItem('playerList'));
+  let storedPlayersList = JSON.parse(localStorage.getItem('playersList'));
 
-  if (storedPlayerList !== null) {
-    playerInfo = storedPlayerList;
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedPlayersList !== null) {
+    playersList = storedPlayersList;
   }
+
   startGame();
 }
 init();
