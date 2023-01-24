@@ -4,8 +4,6 @@ const inputForm = document.getElementById('input-form');
 const userName = inputForm.querySelector('#user-name');
 const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
-const displayUser = document.querySelector('.display-user');
-const displayScore = document.querySelector('.display-score');
 const viewHighScores = document.querySelector('.view-high-scores');
 
 //Display Elements
@@ -22,17 +20,17 @@ const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
 const scoreBoard = document.querySelector('.score-board');
 
+const ulDisplayHighscore = document.querySelector('.display-high-score');
+
 //Global Vars
 let timerCount,
   questionIndex,
   gameTimer,
+  playersList = [],
   finalResult = {};
 
 //Start challenge
 function startGame() {
-  //start timer
-  //restart question
-  //display question
   nav.classList.remove('d-none');
   startQuiz.classList.remove('d-none');
   //Hide quiz section and scoreboard
@@ -138,7 +136,7 @@ function displayQuestion() {
   let chosenChoices = listOfQuestions[chosenQuestion];
   let [correctAnswer] = chosenChoices.slice(-1);
 
-  console.log(chosenQuestion, chosenChoices, correctAnswer);
+  // console.log(chosenQuestion, chosenChoices, correctAnswer);
 
   //display the question
   questionEl.textContent = chosenQuestion;
@@ -160,7 +158,7 @@ function displayQuestion() {
         document.createTextNode(`${indexOfBtn + 1}. ${choice}`)
       );
       btnsSection.appendChild(button);
-      console.log(choice);
+      // console.log(choice);
 
       //add click listenser
       button.addEventListener('click', () => {
@@ -191,7 +189,7 @@ function restartQuestion() {
 
 // check if user input is correct
 function showResults(userAnswer, correctAnswer) {
-  console.log(userAnswer, correctAnswer);
+  // console.log(userAnswer, correctAnswer);
 
   // show results - Correct or incorrect
   if (Number(userAnswer) != correctAnswer) {
@@ -218,12 +216,37 @@ function showScoreBoard() {
 
   //show Scoreboard
   scoreBoard.classList.remove('d-none');
-  displayUser.textContent = finalResult.userName;
-  displayScore.textContent = finalResult.points;
 
-  //add click listeners on btns
-  goBack.addEventListener('click', startGame);
-  clearScore.addEventListener('click', clearBoard);
+  playersList.forEach((player) => {
+    console.log(player.finalResult);
+
+    let li = document.createElement('li');
+    li.setAttribute('class', 'bg-tertiary mb-2');
+
+    let h6 = document.createElement('h6');
+    h6.setAttribute('class', 'mb-0 py-3 ms-4');
+
+    li.appendChild(h6).appendChild(
+      document.createTextNode(
+        `Player Name: ${player.finalResult.userName} - Points: ${player.finalResult.points}`
+      )
+    );
+
+    ulDisplayHighscore.appendChild(li);
+  });
+}
+
+//add click listeners on btns
+goBack.addEventListener('click', function () {
+  location.reload();
+});
+
+clearScore.addEventListener('click', clearBoard);
+//clear high score btn
+function clearBoard() {
+  playersList = [];
+  ulDisplayHighscore.innerHTML = '';
+  localStorage.clear();
 }
 
 // Show final score
@@ -234,39 +257,35 @@ function getInputvalue() {
 
     //Hide input form
     quizSection.classList.add('d-none');
+    //Add UserName to object
+    finalResult['userName'] = userName.value;
+
+    playersList.push({ finalResult });
+    storeUserInfo();
+
+    userName.value = '';
+
     //show high score board
     showScoreBoard();
-
-    //Ad UserName to object
-    finalResult['userName'] = userName.value;
-    console.log(finalResult);
-    storeUserInfo(finalResult);
   });
 }
 
 //store user name and points in local storage
-function storeUserInfo(playerInfo) {
-  localStorage.setItem('playerList', JSON.stringify(playerInfo));
+function storeUserInfo() {
+  localStorage.setItem('playersList', JSON.stringify(playersList));
 }
 
 //compare all users score and display highest point up to the top
 
-//clear high score btn
-function clearBoard() {
-  displayUser.textContent = '';
-  displayScore.textContent = '';
-  finalResult['userName'] = '';
-  finalResult['points'] = '';
-  localStorage.clear();
-}
-
 //Init
 function init() {
-  let storedPlayerList = JSON.parse(localStorage.getItem('playerList'));
+  let storedPlayersList = JSON.parse(localStorage.getItem('playersList'));
 
-  if (storedPlayerList !== null) {
-    playerInfo = storedPlayerList;
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedPlayersList !== null) {
+    playersList = storedPlayersList;
   }
+
   startGame();
 }
 init();
