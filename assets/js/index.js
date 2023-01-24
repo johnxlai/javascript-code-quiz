@@ -22,6 +22,8 @@ const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
 const scoreBoard = document.querySelector('.score-board');
 
+const ulDisplayHighscore = document.querySelector('.display-high-score');
+
 //Global Vars
 let timerCount,
   questionIndex,
@@ -216,8 +218,24 @@ function showScoreBoard() {
 
   //show Scoreboard
   scoreBoard.classList.remove('d-none');
-  displayUser.textContent = finalResult.userName;
-  displayScore.textContent = finalResult.points;
+
+  playersList.forEach((player) => {
+    console.log(player.finalResult);
+
+    let li = document.createElement('li');
+    li.setAttribute('class', 'bg-tertiary mb-2');
+
+    let h6 = document.createElement('h6');
+    h6.setAttribute('class', 'mb-0 py-3 ms-4');
+
+    li.appendChild(h6).appendChild(
+      document.createTextNode(
+        `Player Name: ${player.finalResult.userName} - Points: ${player.finalResult.points}`
+      )
+    );
+
+    ulDisplayHighscore.appendChild(li);
+  });
 
   //add click listeners on btns
   goBack.addEventListener('click', startGame);
@@ -228,8 +246,7 @@ function showScoreBoard() {
 function clearBoard() {
   displayUser.textContent = '';
   displayScore.textContent = '';
-  finalResult['userName'] = '';
-  finalResult['points'] = '';
+  playersList = [];
   localStorage.clear();
 }
 
@@ -241,14 +258,16 @@ function getInputvalue() {
 
     //Hide input form
     quizSection.classList.add('d-none');
-    //show high score board
-    showScoreBoard();
-
     //Add UserName to object
     finalResult['userName'] = userName.value;
 
     playersList.push({ finalResult });
     storeUserInfo();
+
+    userName.value = '';
+
+    //show high score board
+    showScoreBoard();
   });
 }
 
