@@ -99,24 +99,24 @@ const listOfQuestions = {
     'numbers',
     2,
   ],
-  // 'The condition in an if / else statement is enclosed with _______.': [
-  //   'quotes',
-  //   'curly brackets',
-  //   'parenthesis',
-  //   'square brackets',
-  //   1,
-  // ],
-  // 'Arrays in JavaScript can be used to store _______.': [
-  //   'numbers and strings',
-  //   'other arrays',
-  //   'booleans',
-  //   'all of the above',
-  //   3,
-  // ],
-  // 'String values must be enclosed within _______ when being assigned to variables.':
-  //   ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
-  // 'A very useful tool used during development and debugging for printing content to the debugger is:':
-  //   ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
+  'The condition in an if / else statement is enclosed with _______.': [
+    'quotes',
+    'curly brackets',
+    'parenthesis',
+    'square brackets',
+    1,
+  ],
+  'Arrays in JavaScript can be used to store _______.': [
+    'numbers and strings',
+    'other arrays',
+    'booleans',
+    'all of the above',
+    3,
+  ],
+  'String values must be enclosed within _______ when being assigned to variables.':
+    ['commas', 'curly brackets', 'quotes', 'parenthesis', 2],
+  'A very useful tool used during development and debugging for printing content to the debugger is:':
+    ['Javascript', 'terminal/bash', 'for loops', 'console.log', 3],
 };
 
 //check length of Questions to know how many times it needs to be looped
@@ -234,12 +234,14 @@ function showScoreBoard() {
 
     ulDisplayHighscore.appendChild(li);
   });
-
-  //add click listeners on btns
-  goBack.addEventListener('click', startGame);
-  clearScore.addEventListener('click', clearBoard);
 }
 
+//add click listeners on btns
+goBack.addEventListener('click', function () {
+  location.reload();
+});
+
+clearScore.addEventListener('click', clearBoard);
 //clear high score btn
 function clearBoard() {
   playersList = [];
