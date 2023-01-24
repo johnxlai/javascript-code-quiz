@@ -1,3 +1,4 @@
+//Buttons and form inputs
 const startBtn = document.querySelector('.start-btn');
 const btnsSection = document.querySelector('.btns-section');
 const inputForm = document.getElementById('input-form');
@@ -12,6 +13,7 @@ const questionEl = document.querySelector('.question');
 const resultEl = document.querySelector('.results');
 const finalTimeEl = document.querySelector('.final-time-left');
 const nav = document.querySelector('nav');
+const ulDisplayHighscore = document.querySelector('.display-high-score');
 
 //Html Sections
 const startQuiz = document.querySelector('.start-quiz');
@@ -20,9 +22,7 @@ const quizContent = document.querySelector('.quiz-content');
 const finalScore = document.querySelector('.final-score');
 const scoreBoard = document.querySelector('.score-board');
 
-const ulDisplayHighscore = document.querySelector('.display-high-score');
-
-//Global Vars
+//set up global var
 let timerCount,
   questionIndex,
   gameTimer,
@@ -82,12 +82,14 @@ function endGame() {
 
   quizContent.classList.add('d-none');
   finalScore.classList.remove('d-none');
+
+  //Add time left to the finalResults obj
   finalResult = {
     points: timerCount,
   };
 
   finalTimeEl.textContent = finalResult.points;
-  getInputvalue();
+  getUserName();
 }
 
 //show one question from the objects
@@ -134,6 +136,7 @@ function displayQuestion() {
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
+  //Grab last item and use array destructing
   let [correctAnswer] = chosenChoices.slice(-1);
 
   // console.log(chosenQuestion, chosenChoices, correctAnswer);
@@ -195,7 +198,7 @@ function showResults(userAnswer, correctAnswer) {
   if (Number(userAnswer) != correctAnswer) {
     resultEl.textContent = 'Wrong !';
 
-    //if answer is incorrect minus mb-0 py-3 ms-4
+    //if answer is incorrect minus
     timerCount -= 10;
 
     timerEl.textContent = timerCount;
@@ -251,7 +254,7 @@ function clearBoard() {
 
 // Show final score
 //ask user to input initials
-function getInputvalue() {
+function getUserName() {
   inputForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -275,13 +278,11 @@ function storeUserInfo() {
   localStorage.setItem('playersList', JSON.stringify(playersList));
 }
 
-//compare all users score and display highest point up to the top
-
 //Init
 function init() {
   let storedPlayersList = JSON.parse(localStorage.getItem('playersList'));
 
-  // If todos were retrieved from localStorage, update the todos array to it
+  // If playersList were retrieved from localStorage, update the playersList array to it
   if (storedPlayersList !== null) {
     playersList = storedPlayersList;
   }
