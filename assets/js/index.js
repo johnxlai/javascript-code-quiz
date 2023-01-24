@@ -61,7 +61,7 @@ viewHighScores.addEventListener('click', function () {
 
 //start timer
 function startTimer() {
-  timerCount = 50;
+  timerCount = 70;
   timerEl.textContent = timerCount;
 
   gameTimer = setInterval(() => {
@@ -71,6 +71,8 @@ function startTimer() {
     //End game if timer is over
     if (timerCount <= 0) {
       timerEl.textContent = `Out of Time`;
+      //Avoid negative points
+      timerCount = 0;
       endGame();
     }
   }, 1000);
