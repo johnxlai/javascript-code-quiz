@@ -228,8 +228,6 @@ function showScoreBoard() {
   });
 
   sortedPlayersList.forEach((player) => {
-    console.log(player.finalResult);
-
     let li = document.createElement('li');
     li.setAttribute('class', 'bg-tertiary mb-2');
 
