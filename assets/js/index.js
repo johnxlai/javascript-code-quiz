@@ -222,7 +222,12 @@ function showScoreBoard() {
   //show Scoreboard
   scoreBoard.classList.remove('d-none');
 
-  playersList.forEach((player) => {
+  //Use the sort method to sort players by points high to small
+  let sortedPlayersList = playersList.sort((player1, player2) => {
+    return player2.finalResult.points - player1.finalResult.points;
+  });
+
+  sortedPlayersList.forEach((player) => {
     console.log(player.finalResult);
 
     let li = document.createElement('li');
