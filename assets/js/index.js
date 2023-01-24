@@ -4,8 +4,6 @@ const inputForm = document.getElementById('input-form');
 const userName = inputForm.querySelector('#user-name');
 const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
-const displayUser = document.querySelector('.display-user');
-const displayScore = document.querySelector('.display-score');
 const viewHighScores = document.querySelector('.view-high-scores');
 
 //Display Elements
@@ -244,9 +242,8 @@ function showScoreBoard() {
 
 //clear high score btn
 function clearBoard() {
-  displayUser.textContent = '';
-  displayScore.textContent = '';
   playersList = [];
+  ulDisplayHighscore.innerHTML = '';
   localStorage.clear();
 }
 
