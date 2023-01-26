@@ -271,7 +271,7 @@ inputForm.addEventListener('submit', function (e) {
   quizSection.classList.add('d-none');
   //Add UserName to object
   finalResult['userName'] = userName.value;
-  userName.value = '';
+  // userName.value = '';
 
   //show high score board
   addNewScore();
