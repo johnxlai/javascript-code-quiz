@@ -37,43 +37,41 @@ function startGame() {
   quizSection.classList.add('d-none');
   scoreBoard.classList.add('d-none');
 
+  quizSection.classList.remove('d-none');
+  quizContent.classList.remove('d-none');
+  finalScore.classList.add('d-none');
+
   timerCount = 0;
   questionIndex = 0;
   timerEl.textContent = timerCount;
   resultEl.textContent = '';
-  restartQuestion();
 
-  startBtn.addEventListener('click', () => {
-    quizSection.classList.remove('d-none');
-    quizContent.classList.remove('d-none');
-    finalScore.classList.add('d-none');
-
-    startTimer();
-    displayQuestion();
-  });
+  startTimer();
+  displayQuestion();
+  // restartQuestion();
 }
 
+startBtn.addEventListener('click', startGame);
 //View high scores btn
 viewHighScores.addEventListener('click', function () {
   nav.classList.add('d-none');
-  showScoreBoard();
+  showHighScore();
 });
 
 //start timer
 function startTimer() {
-  timerCount = 70;
+  timerCount = 30;
   timerEl.textContent = timerCount;
 
   gameTimer = setInterval(() => {
     timerCount--;
-    timerEl.textContent = timerCount;
-
     //End game if timer is over
-    if (timerCount <= 0) {
+    if (timerCount < 0) {
       timerEl.textContent = `Out of Time`;
-      //Avoid negative points
-      timerCount = 0;
+
       endGame();
+    } else {
+      timerEl.textContent = timerCount;
     }
   }, 1000);
 }
@@ -85,13 +83,8 @@ function endGame() {
   quizContent.classList.add('d-none');
   finalScore.classList.remove('d-none');
 
-  //Add time left to the finalResults obj
-  finalResult = {
-    points: timerCount,
-  };
-
-  finalTimeEl.textContent = finalResult.points;
-  getUserName();
+  finalTimeEl.textContent = timerCount;
+  // getUserName();
 }
 
 //show one question from the objects
@@ -138,6 +131,8 @@ function displayQuestion() {
 
   let chosenQuestion = Object.keys(listOfQuestions)[questionIndex];
   let chosenChoices = listOfQuestions[chosenQuestion];
+  if (!chosenChoices) return;
+
   //Grab last item and use array destructing
   let [correctAnswer] = chosenChoices.slice(-1);
 
@@ -203,7 +198,6 @@ function showResults(userAnswer, correctAnswer) {
     //if answer is incorrect minus
     timerCount -= 10;
 
-    timerEl.textContent = timerCount;
     return;
   }
 
@@ -213,36 +207,9 @@ function showResults(userAnswer, correctAnswer) {
 }
 
 //show high scores display board
-function showScoreBoard() {
-  //hide quiz, nav
-  startQuiz.classList.add('d-none');
-  quizSection.classList.add('d-none');
-  nav.classList.add('d-none');
+// function showScoreBoard() {
 
-  //show Scoreboard
-  scoreBoard.classList.remove('d-none');
-
-  //Use the sort method to sort players by points high to small
-  let sortedPlayersList = playersList.sort((player1, player2) => {
-    return player2.finalResult.points - player1.finalResult.points;
-  });
-
-  sortedPlayersList.forEach((player) => {
-    let li = document.createElement('li');
-    li.setAttribute('class', 'bg-tertiary mb-2');
-
-    let h6 = document.createElement('h6');
-    h6.setAttribute('class', 'mb-0 py-3 ms-4');
-
-    li.appendChild(h6).appendChild(
-      document.createTextNode(
-        `Player Name: ${player.finalResult.userName} - Points: ${player.finalResult.points}`
-      )
-    );
-
-    ulDisplayHighscore.appendChild(li);
-  });
-}
+// }
 
 //add click listeners on btns
 goBack.addEventListener('click', function () {
@@ -257,41 +224,61 @@ function clearBoard() {
   localStorage.clear();
 }
 
+//show high score function
+function showHighScore() {
+  //hide quiz, nav
+  startQuiz.classList.add('d-none');
+  quizSection.classList.add('d-none');
+  nav.classList.add('d-none');
+
+  //show Scoreboard
+  scoreBoard.classList.remove('d-none');
+
+  let storedPlayersList = JSON.parse(localStorage.getItem('playersList')) || [];
+  //Use the sort method to sort players by points high to small
+  let sortedPlayersList = storedPlayersList.sort((player1, player2) => {
+    return player2.points - player1.points;
+  });
+  let playerHtml = '';
+  sortedPlayersList.forEach((player) => {
+    playerHtml += `<li class="bg-tertiary mb-2">
+                    <h6 class="mb-0 py-3 ms-4">Player Name: ${player.userName} - Points: ${player.points}</h6>
+                  </li>`;
+  });
+  ulDisplayHighscore.innerHTML = playerHtml;
+}
+
+// at new score
+function addNewScore() {
+  let storedPlayersList = JSON.parse(localStorage.getItem('playersList')) || [];
+
+  let newPlayer = {
+    userName: userName.value,
+    points: timerCount,
+  };
+
+  storedPlayersList.push(newPlayer);
+  localStorage.setItem('playersList', JSON.stringify(storedPlayersList));
+  showHighScore();
+}
+
 // Show final score
 //ask user to input initials
-function getUserName() {
-  inputForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+inputForm.addEventListener('submit', function (e) {
+  e.preventDefault();
 
-    //Hide input form
-    quizSection.classList.add('d-none');
-    //Add UserName to object
-    finalResult['userName'] = userName.value;
+  //Hide input form
+  quizSection.classList.add('d-none');
+  //Add UserName to object
+  finalResult['userName'] = userName.value;
+  userName.value = '';
 
-    playersList.push({ finalResult });
-    storeUserInfo();
-
-    userName.value = '';
-
-    //show high score board
-    showScoreBoard();
-  });
-}
-
-//store user name and points in local storage
-function storeUserInfo() {
-  localStorage.setItem('playersList', JSON.stringify(playersList));
-}
+  //show high score board
+  addNewScore();
+});
 
 //Init
 function init() {
-  let storedPlayersList = JSON.parse(localStorage.getItem('playersList'));
-
-  // If playersList were retrieved from localStorage, update the playersList array to it
-  if (storedPlayersList !== null) {
-    playersList = storedPlayersList;
-  }
-
   startGame();
 }
 init();
