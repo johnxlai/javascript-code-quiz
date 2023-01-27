@@ -1,8 +1,8 @@
 //Buttons and form inputs
 const startBtn = document.querySelector('.start-btn');
-const btnsSection = document.querySelector('.btns-section');
-const inputForm = document.getElementById('input-form');
-const userName = inputForm.querySelector('#user-name');
+const btnsSection = document.querySelector('#btns-section');
+const inputSubmit = document.getElementById('input-submit');
+const userName = document.querySelector('#user-name');
 const goBack = document.querySelector('.go-back');
 const clearScore = document.querySelector('.clear-score');
 const viewHighScores = document.querySelector('.view-high-scores');
@@ -31,15 +31,8 @@ let timerCount,
 
 //Start challenge
 function startGame() {
-  nav.classList.remove('d-none');
-  startQuiz.classList.remove('d-none');
-  //Hide quiz section and scoreboard
-  quizSection.classList.add('d-none');
-  scoreBoard.classList.add('d-none');
-
-  quizSection.classList.remove('d-none');
-  quizContent.classList.remove('d-none');
-  finalScore.classList.add('d-none');
+  showSection([nav, startQuiz, quizSection, quizContent]);
+  hideSection([scoreBoard, finalScore]);
 
   timerCount = 0;
   questionIndex = 0;
@@ -50,13 +43,6 @@ function startGame() {
   displayQuestion();
   // restartQuestion();
 }
-
-startBtn.addEventListener('click', startGame);
-//View high scores btn
-viewHighScores.addEventListener('click', function () {
-  nav.classList.add('d-none');
-  showHighScore();
-});
 
 //start timer
 function startTimer() {
@@ -80,8 +66,8 @@ function endGame() {
   //Stop timer
   clearInterval(gameTimer);
 
-  quizContent.classList.add('d-none');
-  finalScore.classList.remove('d-none');
+  hideSection([quizContent]);
+  showSection([finalScore]);
 
   finalTimeEl.textContent = timerCount;
   // getUserName();
@@ -120,11 +106,8 @@ const listOfQuestions = {
 let lengthOfQuestions = Object.keys(listOfQuestions).length;
 
 function displayQuestion() {
-  //Hide unwanted sections
-  startQuiz.classList.add('d-none');
-
-  //Show quiz
-  quizSection.classList.remove('d-none');
+  showSection([quizSection]);
+  hideSection([startQuiz]);
 
   //Remove old btns and Questions from last round
   restartQuestion();
@@ -142,41 +125,22 @@ function displayQuestion() {
   questionEl.textContent = chosenQuestion;
 
   //loop thru the array and generate a button for each element
+
+  let buttonHtml = '';
+
   chosenChoices.forEach((choice, index, array) => {
     // Exclude the last item in the array (which is the answer)
     // Create btn for all choice except last
     if (index !== array.length - 1) {
       let indexOfBtn = chosenChoices.indexOf(choice);
-      let button = document.createElement('button');
 
-      //Add btn style and data index
-      button.setAttribute('class', 'btn-choice btn btn-primary mb-3 p-3');
-      button.setAttribute('data-index', indexOfBtn);
-
-      //Add correct text for each btn
-      button.appendChild(
-        document.createTextNode(`${indexOfBtn + 1}. ${choice}`)
-      );
-      btnsSection.appendChild(button);
-      // console.log(choice);
-
-      //add click listenser
-      button.addEventListener('click', () => {
-        //Get Data index number and change from string to number
-        let userAnswer = Number(button.getAttribute('data-index'));
-
-        showResults(userAnswer, correctAnswer);
-        questionIndex++;
-
-        if (questionIndex < lengthOfQuestions) {
-          displayQuestion();
-        } else {
-          //No more questions
-          endGame();
-        }
-      });
+      buttonHtml += `
+      <button class="btn-choice btn btn-primary mb-3 p-3" data-index="${indexOfBtn}">
+        ${indexOfBtn + 1}. ${choice}
+      </button>`;
     }
   });
+  btnsSection.innerHTML = buttonHtml;
 }
 
 //Remove Old question and btns
@@ -224,15 +188,21 @@ function clearBoard() {
   localStorage.clear();
 }
 
+function hideSection(elements) {
+  elements.forEach((el) => el.classList.add('d-none'));
+}
+
+function showSection(elements) {
+  elements.forEach((el) => el.classList.remove('d-none'));
+}
+
 //show high score function
 function showHighScore() {
   //hide quiz, nav
-  startQuiz.classList.add('d-none');
-  quizSection.classList.add('d-none');
-  nav.classList.add('d-none');
+  hideSection([startQuiz, quizSection, nav]);
+  showSection([scoreBoard]);
 
   //show Scoreboard
-  scoreBoard.classList.remove('d-none');
 
   let storedPlayersList = JSON.parse(localStorage.getItem('playersList')) || [];
   //Use the sort method to sort players by points high to small
@@ -250,6 +220,9 @@ function showHighScore() {
 
 // at new score
 function addNewScore() {
+  //Hide input form
+  quizSection.classList.add('d-none');
+
   let storedPlayersList = JSON.parse(localStorage.getItem('playersList')) || [];
 
   let newPlayer = {
@@ -264,19 +237,28 @@ function addNewScore() {
 
 // Show final score
 //ask user to input initials
-inputForm.addEventListener('submit', function (e) {
-  e.preventDefault();
+inputSubmit.addEventListener('click', addNewScore);
 
-  //Hide input form
-  quizSection.classList.add('d-none');
-  //Add UserName to object
-  finalResult['userName'] = userName.value;
-  // userName.value = '';
+startBtn.addEventListener('click', startGame);
+//View high scores btn
+viewHighScores.addEventListener('click', showHighScore);
 
-  //show high score board
-  addNewScore();
+//add click listenser
+btnsSection.addEventListener('click', (e) => {
+  // e.target.classList('')
+  //Get Data index number and change from string to number
+  let userAnswer = Number(e.target.dataset.index);
+
+  showResults(userAnswer, correctAnswer);
+  questionIndex++;
+
+  if (questionIndex < lengthOfQuestions) {
+    displayQuestion();
+  } else {
+    //No more questions
+    endGame();
+  }
 });
-
 //Init
 function init() {
   startGame();
