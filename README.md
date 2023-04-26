@@ -5,7 +5,7 @@ so that I can gauge my progess compared to my peers
 
 
 # Description
-* This is a Javascript Coding Quiz Challage Game!  It uses the web API's localStorage object to store players infomation at the end of the game. You can always see who has the highest score by clicking on the high score button.
+* This is a Javascript Coding Quiz Challage Game!  It uses the web API's localStorage object to store players information at the end of the game. You can always see who has the highest score by clicking on the high score button.
 Enjoy!
 
 * This project uses bootstrap v5.3 and Google Font
